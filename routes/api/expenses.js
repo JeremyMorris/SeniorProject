@@ -8,8 +8,8 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../../models/User');
 
-// @route   GET api/categories
-// @desc    Get categories
+// @route   GET api/expenses
+// @desc    Get expenses
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {

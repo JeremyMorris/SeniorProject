@@ -22,7 +22,30 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// @route   POST api/categories
+// @route   GET api/categories:category_id
+// @desc    Get all expenses within a category
+// @access  Private
+router.get('/:category_id', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+
+    const expenseList = [];
+
+    user.expenses.forEach(expense => {
+      if (expense.category == req.params.category_id) {
+        expenseList.push(expense);
+      }
+    });
+
+    res.json(expenseList);
+  }
+  catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST api/categories/
 // @desc    Create new category
 // @access  Private
 router.post('/', auth, [
