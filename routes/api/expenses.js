@@ -6,6 +6,7 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const checkRecurringExpenses = require('../../server functions/checkRecurringExpenses');
 const User = require('../../models/User');
 
 // @route   GET api/expenses
@@ -42,7 +43,8 @@ router.post('/', auth, [
           date,
           notes,
           recurring,
-          frequency
+          frequency,
+          parent
          } = req.body;
 
   // build expense object
@@ -54,15 +56,22 @@ router.post('/', auth, [
   if (notes) newExpense.notes = notes;
   if (recurring) newExpense.recurring = recurring;
   if (frequency) newExpense.frequency = frequency;
+  if (parent) newExpense.parent = parent;
+
+  if (frequency && date) newExpense.nextOccurrence = date;
 
   try {
     // Get user
     let user = await User.findById(req.user.id).select('-password');
 
-    // Add category
-    user.expenses.push(newExpense);
+    // Determine type of expense and add
+    if (frequency) user.recurringExpenses.push(newExpense);
+    else user.expenses.push(newExpense);
 
     await user.save();
+
+    // if the user added a recurring expense, check for occurrences
+    if (frequency) checkRecurringExpenses(req.user.id);
 
     res.json(user);
   } catch (err) {
@@ -89,7 +98,7 @@ router.put('/:expense_id', auth, async (req, res) => {
     // Get user
     let user = await User.findById(req.user.id).select('-password');
 
-    // Get category index
+    // Get expense index
     const index = user.expenses.map(item => item.id).indexOf(req.params.expense_id);
     if (name) user.expenses[index].name = name;
     if (amount) user.expenses[index].amount = amount;

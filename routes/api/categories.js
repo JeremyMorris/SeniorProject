@@ -29,15 +29,27 @@ router.get('/:category_id', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
 
-    const expenseList = [];
+    const expenses = [];
+    const recurringExpenses = [];
 
     user.expenses.forEach(expense => {
       if (expense.category == req.params.category_id) {
-        expenseList.push(expense);
+        expenses.push(expense);
       }
     });
 
-    res.json(expenseList);
+    user.recurringExpenses.forEach(expense => {
+      if (expense.category == req.params.category_id) {
+        recurringExpenses.push(expense);
+      }
+    });
+
+    let expenseObject = {
+      expenses,
+      recurringExpenses
+    }
+
+    res.json(expenseObject);
   }
   catch (err) {
     console.error(err.message);

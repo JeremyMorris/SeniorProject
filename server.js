@@ -1,7 +1,10 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const schedule = require('node-schedule');
 
 const app = express();
+
+const checkRecurrencesForAllUsers = require('./server functions/checkRecurrencesForAllUsers');
 
 // Connect database
 connectDB();
@@ -20,3 +23,8 @@ app.use('/api/expenses', require('./routes/api/expenses'));
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+schedule.scheduleJob('0 0 * * *', () => {
+  console.log('Checking recurrences for all users');
+  checkRecurrencesForAllUsers();
+})

@@ -42,8 +42,37 @@ const UserSchema = new mongoose.Schema({
       type: Boolean,
       default: false
     },
-    frequency: {
+    parent: {
       type: String
+    }
+  }],
+  recurringExpenses: [{
+    name: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true
+    },
+    category: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+      default: Date.now
+    },
+    notes: {
+      type: String
+    },
+    frequency: {
+      type: String,
+      required: true
+    },
+    nextOccurrence: {
+      type: Date,
+      default: Date.now
     }
   }],
   categories: [{
