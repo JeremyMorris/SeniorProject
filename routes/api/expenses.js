@@ -122,12 +122,24 @@ router.put('/:expense_id', auth, async (req, res) => {
 // @access  Private
 router.delete('/:expense_id', auth, async (req, res) => {
   try {
+    let recurring = false;
     const user = await User.findById(req.user.id).select('-password');
 
     // Get remove index
-    const removeIndex = user.expenses.map(item => item.id).indexOf(req.params.expenses_id);
+    let removeIndex = user.expenses.map(item => item.id).indexOf(req.params.expense_id);
+    if (removeIndex == -1) {
+      removeIndex = user.recurringExpenses.map(item => item.id).indexOf(req.params.expense_id);
+      recurring = true;
+    }
+    if (removeIndex == -1) {
+      return res.status(404).send('Expense not found');
+    }
 
-    user.expenses.splice(removeIndex, 1);
+    if (recurring) {
+      user.recurringExpenses.splice(removeIndex, 1);
+    } else {
+     user.expenses.splice(removeIndex, 1);
+    }
 
     await user.save();
 
