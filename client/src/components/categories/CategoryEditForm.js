@@ -1,25 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
-import { addCategory } from '../../actions/categories';
+import { editCategory } from '../../actions/categories';
 import { Dialog } from 'primereact/dialog';
 
-export const CategoryForm = ({ show, addCategory, toggleShow }) => {
+export const CategoryEditForm = ({ show, editCategory, toggleShow, data }) => {
   const [formData, setFormData] = useState({
     name: '',
     color: ''
   });
+
+  useEffect(() => {
+    setFormData({
+      name: data.name || '',
+      color: data.color || ''
+    })
+  }, [data])
 
   const { name, color } = formData;
 
   const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <Dialog header="Add Category" visible={show} style={{width: '80vw'}} modal={true} onHide={() => {
+    <Dialog header="Edit Category" visible={show} style={{width: '80vw'}} modal={true} onHide={() => {
       toggleShow(false);
     }}>
       <form className="form" onSubmit={e => {
         e.preventDefault();
-        addCategory(formData);
+        editCategory(formData, data._id);
         toggleShow(false);
       }}>
         <div className="form-group">
@@ -35,8 +42,8 @@ export const CategoryForm = ({ show, addCategory, toggleShow }) => {
   );
 }
 
-CategoryForm.propTypes = {
+CategoryEditForm.propTypes = {
 
 }
 
-export default connect(null, { addCategory })(CategoryForm);
+export default connect(null, { editCategory })(CategoryEditForm);

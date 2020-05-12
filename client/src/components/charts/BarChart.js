@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Chart } from 'primereact/chart';
 
 export const BarChart = ({ expenses, selectedCategories, dateList, xLabels }) => {

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { loadUser } from '../../actions/auth';
@@ -9,7 +8,7 @@ import CategoryTable from './CategoryTable';
 export const Categories = ({ loadUser, auth: { user, loading } }) => {
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   const [showCategoryForm, toggleCategoryForm] = useState(false);
 

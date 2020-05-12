@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { Carousel } from 'primereact/carousel';
 import PieChart from '../charts/PieChart';
 import BarChart from '../charts/BarChart';
@@ -32,10 +31,6 @@ export const ChartCarousel = ({ expenses, selectedCategories, fromDate, toDate }
   return (
     <Carousel value={charts} itemTemplate={(chart) => chart} numVisible={1} numScroll={1}/>
   )
-}
-
-ChartCarousel.propTypes = {
-
 }
 
 export default ChartCarousel

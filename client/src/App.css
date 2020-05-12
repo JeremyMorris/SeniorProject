@@ -17,7 +17,7 @@ body {
   font-family: 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(250, 250, 250);
   color: #333;
 }
 
@@ -42,6 +42,11 @@ img {
   padding: 0 2rem;
   margin-top: 6rem;
   margin-bottom: 3rem;
+}
+
+.center {
+  margin: auto;
+  padding: 10px;
 }
 
 /* Text Styles*/
@@ -151,9 +156,13 @@ img {
 .alert {
   padding: 0.8rem;
   margin: 1rem 0;
-  opacity: 0.9;
+  opacity: 0.5;
   background: var(--light-color);
   color: #333;
+  position: fixed;
+  width: 65%;
+  bottom: 0;
+  justify-content: center;
 }
 
 .btn-primary,
@@ -161,7 +170,7 @@ img {
 .badge-primary,
 .alert-primary {
   background: var(--primary-color);
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
 }
 
 .btn-light,
@@ -177,7 +186,7 @@ img {
 .badge-dark,
 .alert-dark {
   background: var(--dark-color);
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
 }
 
 .btn-danger,
@@ -185,7 +194,7 @@ img {
 .badge-danger,
 .alert-danger {
   background: var(--danger-color);
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
 }
 
 .btn-success,
@@ -193,14 +202,14 @@ img {
 .badge-success,
 .alert-success {
   background: var(--success-color);
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
 }
 
 .btn-white,
 .bg-white,
 .badge-white,
 .alert-white {
-  background: rgb(236, 236, 236);
+  background: rgb(250, 250, 250);
   color: #333;
   border: #ccc solid 1px;
 }
@@ -209,7 +218,7 @@ img {
 .bg-green,
 .badge-green,
 .alert-green {
-  background: rgb(236, 236, 236);
+  background: rgb(250, 250, 250);
   color: rgb(113, 163, 128);
 }
 
@@ -264,7 +273,7 @@ img {
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
-  background-color: rgb(240, 240, 240);
+  background-color: rgb(250, 250, 250);
 }
 
 .form input[type='submit'],
@@ -281,20 +290,16 @@ button {
   width: 4rem;
 }
 
-.form .social-input i.fa-twitter {
-  color: #38a1f3;
+.table-button {
+  width: 1rem;
 }
-.form .social-input i.fa-facebook {
-  color: #3b5998;
+
+.table-header {
+  padding-top: 1rem;
 }
-.form .social-input i.fa-instagram {
-  color: #3f729b;
-}
-.form .social-input i.fa-youtube {
-  color: #c4302b;
-}
-.form .social-input i.fa-linkedin {
-  color: #0077b5;
+
+.table {
+  padding-top: 1rem;
 }
 
 .table th,
@@ -326,7 +331,7 @@ button {
 }
 
 .navbar a {
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
   padding: 0.45rem;
   margin: 0 0.25rem;
 }
@@ -347,7 +352,7 @@ button {
 }
 
 .landing-inner {
-  color: rgb(236, 236, 236);
+  color: rgb(250, 250, 250);
   height: 100%;
   width: 80%;
   margin: auto;
@@ -423,5 +428,11 @@ button {
 
   .navbar .welcome {
     display: none;
+  }
+
+  .mobile-center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
   }
 }

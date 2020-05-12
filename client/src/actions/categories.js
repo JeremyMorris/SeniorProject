@@ -57,3 +57,34 @@ export const addCategory = (formData) => async dispatch => {
     });
   }
 }
+
+// edit category
+export const editCategory = (formData, id) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const res = await axios.put(`/api/categories/${id}`, formData, config);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Category Edited', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROCEDURE_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}

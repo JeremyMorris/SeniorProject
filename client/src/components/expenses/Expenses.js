@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types'
 import { loadUser } from '../../actions/auth';
@@ -9,7 +8,7 @@ import ExpenseForm from './ExpenseForm';
 export const Expenses = ({ loadUser, auth: { user, loading } }) => {
   useEffect(() => {
     loadUser();
-  }, []);
+  }, [loadUser]);
 
   const [showExpenseForm, toggleExpenseForm] = useState(false);
 
@@ -35,7 +34,7 @@ export const Expenses = ({ loadUser, auth: { user, loading } }) => {
         </li>
       </ul>
       <ExpenseForm show={showExpenseForm} toggleShow={toggleExpenseForm} categories={user.categories}/>
-      <h2>Expenses from {fromDate} to {toDate}</h2>
+      <h2 className="text-center table-header">Expenses from {fromDate} to {toDate}</h2>
       <ExpenseTable expenses=
         {user.expenses.filter(exp => {
             const time = new Date(exp.date).getTime();
@@ -44,7 +43,7 @@ export const Expenses = ({ loadUser, auth: { user, loading } }) => {
             return (from <= time && time <= to);
           })
         } categories={user.categories} />
-      <h2>Recurring Expenses</h2>
+      <h2 className="text-center">Recurring Expenses</h2>
       <ExpenseTable expenses={user.recurringExpenses} categories={user.categories} />
     </Fragment>
   )

@@ -4,12 +4,9 @@ import { connect } from 'react-redux';
 import { loadUser } from '../../actions/auth';
 import { ChartCarousel } from './ChartCarousel';
 import { MultiSelect } from 'primereact/multiselect';
-import { Calendar } from 'primereact/calendar';
+import ExpenseForm from '../expenses/ExpenseForm';
 
 const Dashboard = ({ loadUser, auth: { user, loading } }) => {
-  /*useEffect(() => {
-    loadUser();
-  }, []);*/
   useEffect(() => {
     if (!loading) {
       setCategoryDropdown(user.categories);
@@ -22,6 +19,7 @@ const Dashboard = ({ loadUser, auth: { user, loading } }) => {
   const [fromDate, setFromDate] = useState(`${firstDateOfMonth.getFullYear()}-${(date.getMonth().length < 2 ? '' : '0')}${firstDateOfMonth.getMonth()+1}-0${firstDateOfMonth.getDate()}`);
   const [toDate, setToDate] = useState(`${lastDateOfMonth.getFullYear()}-${(date.getMonth().length < 2 ? '' : '0')}${lastDateOfMonth.getMonth()+1}-${lastDateOfMonth.getDate()}`);
 
+  const [showExpenseForm, toggleExpenseForm] = useState(false);
   const [categoryDropdownValue, setCategoryDropdown] = useState([]);
   const onCategoryChange = e => setCategoryDropdown(e.target.value);
 
@@ -38,6 +36,8 @@ const Dashboard = ({ loadUser, auth: { user, loading } }) => {
     loading ? <div>Loading...</div> : 
     <Fragment>
       <h1 className="large text-primary">Dashboard</h1>
+      <button onClick={e => {toggleExpenseForm(true)}} className="btn btn-primary">Add Expense</button>
+      <ExpenseForm show={showExpenseForm} toggleShow={toggleExpenseForm} categories={user.categories}/>
       <ul className="form parent">
         <li className="form-group half">
           <h4>From Date</h4>

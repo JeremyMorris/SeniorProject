@@ -57,3 +57,34 @@ export const addExpense = (formData) => async dispatch => {
     });
   }
 }
+
+// edit expense
+export const editExpense = (formData, id) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const res = await axios.put(`/api/expenses/${id}`, formData, config);
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Expense Edited', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: PROCEDURE_FAIL,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}

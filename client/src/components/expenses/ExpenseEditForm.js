@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux';
-import { addExpense } from '../../actions/expenses';
+import { editExpense } from '../../actions/expenses';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 
-export const ExpenseForm = ({ show, addExpense, toggleShow, categories }) => {
+export const ExpenseEditForm = ({ show, editExpense, toggleShow, categories, data }) => {
   const [formData, setFormData] = useState({
     name: '',
     amount: '',
@@ -14,6 +14,23 @@ export const ExpenseForm = ({ show, addExpense, toggleShow, categories }) => {
     recurring: false,
     frequency: ''
   });
+
+  useEffect(() => {
+    let datadate = '';
+    if (data.date) {
+      const dateObj = new Date(data.date);
+      datadate = dateObj.toISOString().slice(0,10);
+    }
+    setFormData({
+      name: data.name || '',
+      amount: data.amount || '',
+      category: data.category || '',
+      date: datadate || '',
+      notes: data.notes || '',
+      recurring: data.recurring || false,
+      frequency: data.frequency || ''
+    })
+  }, [data])
 
   const [frequencyDisabled, toggleDisabled] = useState(false);
 
@@ -38,12 +55,12 @@ export const ExpenseForm = ({ show, addExpense, toggleShow, categories }) => {
   }
   
   return (
-    <Dialog header="Add Expense" visible={show} style={{width: '80vw'}} modal={true} onHide={() => {
+    <Dialog header="Edit Expense" visible={show} style={{width: '80vw'}} modal={true} onHide={() => {
       toggleShow(false);
     }}>
       <form className="form" onSubmit={e => {
         e.preventDefault();
-        addExpense(formData);
+        editExpense(formData, data._id);
         toggleShow(false);
       }}>
         <div className="form-group">
@@ -92,4 +109,4 @@ export const ExpenseForm = ({ show, addExpense, toggleShow, categories }) => {
   );
 }
 
-export default connect(null, { addExpense })(ExpenseForm);
+export default connect(null, { editExpense })(ExpenseEditForm);
